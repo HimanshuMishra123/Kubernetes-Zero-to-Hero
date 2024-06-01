@@ -16,6 +16,8 @@
 Ingress Resource <br/>
 ![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/48fc2ede-3f30-4b65-a9f5-3b6463fbd418)
 
+
+command to run the app
 ![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/844ab2b3-f776-4cd8-a971-1327259eec71)
 
 
