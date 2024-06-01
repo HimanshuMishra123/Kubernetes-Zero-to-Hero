@@ -16,3 +16,4 @@
 Ingress Resource <br/>
 ![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/48fc2ede-3f30-4b65-a9f5-3b6463fbd418)
 
+![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/2b7d0cd7-08f7-409d-85a9-96051156ccd4)
