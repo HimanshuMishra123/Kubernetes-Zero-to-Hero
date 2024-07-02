@@ -65,8 +65,9 @@ A service mesh helps manage the traffic of your Kubernetes cluster, particularly
 
 2. **Traffic Management:**
    - **Virtual Services:** Define rules for routing traffic to different versions of a service.
-   - **Destination Rules:** Configure policies to apply to traffic intended for a service.
-   - Example configuration for canary deployment:
+   - **Destination Rules:** Defining "DestinationRule" in Istio is like setting rules for how your traffic should behave when it reaches a specific service in your network. (e.g. subset,load balancing, connection pool settings and outlier detection)
+
+   - Example: Virtual service configuration for canary deployment:
      ```yaml
      apiVersion: networking.istio.io/v1beta1
      kind: VirtualService
@@ -86,6 +87,38 @@ A service mesh helps manage the traffic of your Kubernetes cluster, particularly
              subset: v2
            weight: 10
      ```
+   - Example: Destination rule configuration 
+      ```yaml
+      apiVersion: networking.istio.io/v1beta1
+      kind: DestinationRule
+      metadata:
+      name: my-destination-rule
+      spec:
+      host: my-service
+      subsets:
+      - name: v1
+         labels:
+            version: v1
+      - name: v2
+         labels:
+            version: v2
+      trafficPolicy:
+         loadBalancer:
+            simple: ROUND_ROBIN
+         connectionPool:
+            tcp:
+            maxConnections: 100
+            http:
+            http1MaxPendingRequests: 100
+            http2MaxRequests: 1000
+         outlierDetection:
+            consecutive5xxErrors: 2
+            interval: 1s
+            baseEjectionTime: 30s
+      ```
+
+you can create different DestinationRules for different versions of a service as well. This can be useful for managing specific settings and policies tailored to each version. example - different load balancing strategy needed for each version.  <br/>
+
 
 ### Demo Application
 
