@@ -20,6 +20,7 @@ A service mesh helps manage the traffic of your Kubernetes cluster, particularly
 3. **Observability:** Provides out-of-the-box observability features, enabling tracking and monitoring of service behavior and metrics.
 4. **Traffic Management:** Facilitates traffic splitting, circuit breaking, and other traffic management features.
 
+
 ### Installing and Configuring Istio
 
 1. **Install Istio CLI:**
@@ -42,10 +43,18 @@ A service mesh helps manage the traffic of your Kubernetes cluster, particularly
 ### Istio Architecture Components
 
 - **Istiod:** The control plane component managing configuration and lifecycle of the proxies.
-- **Envoy Proxy(a proxy server):** A sidecar container injected into each pod which is a proxy server for handling all traffic in(ingress) and out(Egress) of the pod. As 
+- **Envoy Proxy(a proxy server):** A sidecar container injected into each pod which is a proxy server for handling and logging all traffic in(ingress) and out(Egress) of the pod. 
 
   ![Service Mesh explained in 60 minutes _ Istio mTLS and Canary Demo _ Complete beginner level guide 18-50 screenshot](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/61ded451-da23-444b-af67-43bc1152dc11)
+In a service mesh like Istio, each application pod in a Kubernetes cluster is paired with a sidecar container that handles communication between services. Here's a summary of how it works: <br/>
 
+Intercepting Requests**: When a service, such as a catalog, wants to make an API call to another service like payments, the request is intercepted by the sidecar container. This sidecar is part of the service mesh and is deployed alongside the main application container in each pod.<br/>
+
+1. **Mutual TLS**: For security, mutual TLS (mTLS) is used. The sidecar container in the calling service (catalog) adds a certificate to the request. The sidecar container in the receiving service (payments) verifies the certificate and responds accordingly. This ensures secure communication between services without requiring changes to the application code.
+
+2. **Traffic Management**: The sidecar containers handle both inbound and outbound traffic, which allows the service mesh to manage various aspects of service-to-service communication, such as load balancing, Canary deployments, and circuit breaking.
+
+3. **Observability**: Sidecar containers also gather metrics and logs about service interactions, which are sent to the service mesh's control plane (like Istiod Pilot). This data helps in monitoring and understanding service behavior and performance (using Kiali dashboard).
 
 ### Istio Features
 
