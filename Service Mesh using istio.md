@@ -1,11 +1,8 @@
-Here are detailed notes on Service Mesh using Istio with mTLS and a Canary Demo, including added explanations, examples, and commands to enhance understanding. The content remains comprehensive, reflecting the document provided.
+Notes on Service Mesh using Istio with mutual TLS(mTLS) and a Canary Demo.This guide also covers admission controllers, sidecar containers, traffic management, mutual TLS (mTLS), and deployment strategies like canary deployments.
 
----
+![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/2e688846-9967-4706-b0b1-9109497d9124)
 
 ## Service Mesh with Istio: Detailed Notes
-
-### Introduction
-In this tutorial, we will explore the concept of a service mesh using Istio. The tutorial includes both theoretical and practical sections, detailing how to install, configure, and set up Istio, and how Istio operates internally, including sidecar injection. This guide also covers admission controllers, sidecar containers, traffic management, mutual TLS (mTLS), and deployment strategies like canary deployments.
 
 ### Key Concepts
 
@@ -42,10 +39,13 @@ A service mesh helps manage the traffic of your Kubernetes cluster, particularly
    kubectl label namespace <namespace> istio-injection=enabled
    ```
 
-### Istio Components
+### Istio Architecture Components
 
 - **Istiod:** The control plane component managing configuration and lifecycle of the proxies.
-- **Envoy Proxy:** A sidecar container injected into each pod, handling all traffic in and out of the pod.
+- **Envoy Proxy(a proxy server):** A sidecar container injected into each pod which is a proxy server for handling all traffic in(ingress) and out(Egress) of the pod. As 
+
+  ![Service Mesh explained in 60 minutes _ Istio mTLS and Canary Demo _ Complete beginner level guide 18-50 screenshot](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/61ded451-da23-444b-af67-43bc1152dc11)
+
 
 ### Istio Features
 
@@ -118,6 +118,7 @@ A service mesh helps manage the traffic of your Kubernetes cluster, particularly
       ```
 
 you can create different DestinationRules for different versions of a service as well. This can be useful for managing specific settings and policies tailored to each version. example - different load balancing strategy needed for each version.  <br/>
+![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/f5600d65-64db-4846-a2f7-1cbb06051c4f)
 
 
 ### Demo Application
