@@ -23,12 +23,14 @@
 **Creating a Helm Chart**
 - Use `helm create <chart_name>` to generate the initial structure.
 - Typical structure includes:
-  - `templates/`: Contains Kubernetes resource files (e.g., Deployment, Service).
-  - `values.yaml`: Contains default configuration values.
+  - `templates/`: Contains Kubernetes resource files (- Example: `deployment.yaml`, `service.yaml`.).
+  - `values.yaml`: Contains default configuration values.(inhe override/change kro and chart use kro as per your need)
   - `Chart.yaml`: Metadata about the chart (name, version, description).
-  - `charts/`: Holds dependencies for the chart.
-  - `.helmignore`: Specifies files to be ignored.
+  - `charts/`: This directory is used to hold any dependencies that your chart might have. Dependencies are other charts that this chart relies on. Initially this is empty.
+  - `.helmignore`: Specifies files and  directories that should be ignored when packaging the chart.
 
+### Helm Chart Structure
+Executing helm create mychart will create a directory called mychart with the following structure:
   mychart/
   ├── Chart.yaml
   ├── values.yaml
@@ -54,16 +56,10 @@
   helm install myrelease mychart
   ```
 
-### Helm Chart Structure
+In above helm install command (to install packages/softwares on kubernetes cluster) <br/>
+myrelease - This is the name you are giving to this Helm release(Instance running on k8s cluster). <br/>
+mychart - This specifies the Helm chart to be installed. <br/>
 
-**Files and Directories**
-- **`templates/`**: Holds the actual YAML templates.
-  - Example: `deployment.yaml`, `service.yaml`.
-- **`values.yaml`**: Default configuration values.
-  - Can be overridden during installation.
-- **`Chart.yaml`**: Contains chart metadata.
-- **`charts/`**: Manages chart dependencies.
-- **`.helmignore`**: Ignores specified files when packaging.
 
 ### Managing Configurations
 
@@ -74,7 +70,7 @@
     ```sh
     helm install --set key=value myrelease mychart
     ```
-  - Custom values file:
+  - Custom values file(recommended*):
     ```sh
     helm install -f custom-values.yaml myrelease mychart
     ```
@@ -82,7 +78,7 @@
 ### Example Usage
 
 **Simple Deployment Example**
-1. Create a Helm chart:
+1. Create a Helm chart with name "helloworld":
    ```sh
    helm create helloworld
    ```
@@ -120,11 +116,15 @@
    ```sh
    helm install helloworld-release ./helloworld
    ```
+   or
 
+   ```sh
+   helm install <release_name> <repo_name>/<chart_name>
+   ```
 ### Advanced Features
 
 **Helm Hooks and Testing**
-- **Helm Hooks**: Run scripts or jobs at specific points in the release lifecycle (e.g., pre-install, post-install).
+- **Helm Hooks**: Run scripts or jobs at specific points in the release lifecycle (e.g., pre-install, post-install,upgrade, delete).They are useful for tasks such as data migrations, cleanup, or validation checks.
 - **Testing**: Helm allows running tests defined in the chart to verify the deployment.
 
 **Example Commands**
@@ -144,29 +144,50 @@
 ### Common Interview Questions
 
 **Helm 2 vs. Helm 3**
-- **Helm 2**: Utilized a server component called Tiller.
-- **Helm 3**: Removed Tiller, enhancing security by removing the need for cluster-wide permissions.
+- **Helm 2**: Utilized a server component called Tiller(responsible for managing releases within the Kubernetes cluster).
+- **Helm 3**: Removed Tiller, enhancing security by removing the need for cluster-wide permissions(which was needed for tiller).
 - **Architectural Differences**: Helm 3's architecture is more streamlined and secure.
 
 ### Practical Helm Commands
 
 **Common Commands**
-- **Search for Charts**:
+- **Search for Charts**:To search for charts in your added repositories
   ```sh
   helm search hub <keyword>
   ```
-- **Add Repository**:
+- **Add Repository to local**:
   ```sh
   helm repo add <repo_name> <repo_url>
   ```
-- **Update Repositories**:
+
+repo_name: A name(for local) you assign to the repository for reference.
+repo_url: The URL of the Helm repository you are adding.
+helm repo add command does not download the entire content of the charts in the repository. Instead, it simply registers the repository with your local Helm client by adding its metadata (such as the repository URL) to the repositories.yaml file located in ~/.config/helm (on Linux/macOS) or %USERPROFILE%\AppData\Roaming\helm (on Windows).
+
+- **Update Repositories**: This will update the repo
   ```sh
-  helm repo update
+  helm repo update 
   ```
-- **List Releases**:
+- **List Releases**: This command reads from repositories.yaml and displays the list of repositories you have added.
   ```sh
-  helm list
+  helm repo list
   ```
+  ```
+  output of helm repo list:
+  NAME    URL
+  myrepo  https://example.com/helm-charts
+  stable  https://charts.helm.sh/stable
+  ```
+
+- **Remove Repositories**: This command will remove the specified repository from repositories.yaml.
+  ```sh
+  helm repo remove <repo_name>
+  ```
+
+### Benefits
+**Standardization**: Provides a standardized structure to start with, making it easier to organize and manage your Kubernetes resources.
+**Customization**: You can customize the templates and values as per your application's requirements.
+**Reuse**: The generated chart can be reused and shared with others, promoting consistency and efficiency in deploying applications.
 
 ### Conclusion
 
