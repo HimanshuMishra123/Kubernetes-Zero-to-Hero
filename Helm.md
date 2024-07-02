@@ -121,6 +121,47 @@ mychart - This specifies the Helm chart to be installed. <br/>
    ```sh
    helm install <release_name> <repo_name>/<chart_name>
    ```
+
+
+### Practical Helm Commands
+
+**Common Commands**
+- **Search for Charts**:To search for charts in your added repositories
+  ```sh
+  helm search hub <keyword>
+  ```
+- **Add Repository to local**:
+  ```sh
+  helm repo add <repo_name> <repo_url>
+  ```
+
+repo_name: A name(for local) you assign to the repository for reference.
+repo_url: The URL of the Helm repository you are adding.
+helm repo add command does not download the entire content of the charts in the repository. Instead, it simply registers the repository with your local Helm client by adding its metadata (such as the repository URL) to the repositories.yaml file located in ~/.config/helm (on Linux/macOS) or %USERPROFILE%\AppData\Roaming\helm (on Windows).
+##### Either you create your own helm in local using helm create and then use helm install to install the packages (or) you do helm repo add to first add(register) the repository and then do helm repo install to install it.
+
+
+- **Update Repositories**: This will update the repo
+  ```sh
+  helm repo update 
+  ```
+- **List Releases**: This command reads from repositories.yaml and displays the list of repositories you have added.
+  ```sh
+  helm repo list
+  ```
+  ```
+  output of helm repo list:
+  NAME    URL
+  myrepo  https://example.com/helm-charts
+  stable  https://charts.helm.sh/stable
+  ```
+
+- **Remove Repositories**: This command will remove the specified repository from repositories.yaml.
+  ```sh
+  helm repo remove <repo_name>
+  ```
+
+   
 ### Advanced Features
 
 **Helm Hooks and Testing**
@@ -147,42 +188,6 @@ mychart - This specifies the Helm chart to be installed. <br/>
 - **Helm 2**: Utilized a server component called Tiller(responsible for managing releases within the Kubernetes cluster).
 - **Helm 3**: Removed Tiller, enhancing security by removing the need for cluster-wide permissions(which was needed for tiller).
 - **Architectural Differences**: Helm 3's architecture is more streamlined and secure.
-
-### Practical Helm Commands
-
-**Common Commands**
-- **Search for Charts**:To search for charts in your added repositories
-  ```sh
-  helm search hub <keyword>
-  ```
-- **Add Repository to local**:
-  ```sh
-  helm repo add <repo_name> <repo_url>
-  ```
-
-repo_name: A name(for local) you assign to the repository for reference.
-repo_url: The URL of the Helm repository you are adding.
-helm repo add command does not download the entire content of the charts in the repository. Instead, it simply registers the repository with your local Helm client by adding its metadata (such as the repository URL) to the repositories.yaml file located in ~/.config/helm (on Linux/macOS) or %USERPROFILE%\AppData\Roaming\helm (on Windows).
-
-- **Update Repositories**: This will update the repo
-  ```sh
-  helm repo update 
-  ```
-- **List Releases**: This command reads from repositories.yaml and displays the list of repositories you have added.
-  ```sh
-  helm repo list
-  ```
-  ```
-  output of helm repo list:
-  NAME    URL
-  myrepo  https://example.com/helm-charts
-  stable  https://charts.helm.sh/stable
-  ```
-
-- **Remove Repositories**: This command will remove the specified repository from repositories.yaml.
-  ```sh
-  helm repo remove <repo_name>
-  ```
 
 ### Benefits
 **Standardization**: Provides a standardized structure to start with, making it easier to organize and manage your Kubernetes resources.
