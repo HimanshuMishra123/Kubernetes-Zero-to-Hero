@@ -135,10 +135,10 @@ mychart - This specifies the Helm chart to be installed. <br/>
   helm repo add <repo_name> <repo_url>
   ```
 
-repo_name: A name(for local) you assign to the repository for reference.
-repo_url: The URL of the Helm repository you are adding.
-helm repo add command does not download the entire content of the charts in the repository. Instead, it simply registers the repository with your local Helm client by adding its metadata (such as the repository URL) to the repositories.yaml file located in ~/.config/helm (on Linux/macOS) or %USERPROFILE%\AppData\Roaming\helm (on Windows).
-##### Either you create your own helm in local using helm create and then use helm install to install the packages (or) you do helm repo add to first add(register) the repository and then do helm repo install to install it.
+repo_name: A name(for local) you assign to the repository for reference.<br/>
+repo_url: The URL of the Helm repository you are adding.<br/>
+helm repo add command does not download the entire content of the charts in the repository. Instead, it simply registers the repository with your local Helm client by adding its metadata (such as the repository URL) to the repositories.yaml file located in ~/.config/helm (on Linux/macOS) or %USERPROFILE%\AppData\Roaming\helm (on Windows).<br/>
+##### Either you create your own helm in local using helm create and then use helm install to install the packages (or) you do helm repo add to first add(register) the repository and then do helm repo install to install it.<br/>
 
 
 - **Update Repositories**: This will update the repo
