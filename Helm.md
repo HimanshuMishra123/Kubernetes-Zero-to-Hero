@@ -126,7 +126,7 @@ mychart - This specifies the Helm chart to be installed. <br/>
 ### Practical Helm Commands
 
 **Common Commands**
-- **Search for Charts**:To search for charts in your added repositories
+- **Search for Charts**:To search for list of charts(packages) in your added repositories url
   ```sh
   helm search hub <keyword>
   ```
@@ -138,12 +138,38 @@ mychart - This specifies the Helm chart to be installed. <br/>
 repo_name: A name(for local) you assign to the repository for reference.<br/>
 repo_url: The URL of the Helm repository you are adding.<br/>
 helm repo add command does not download the entire content of the charts in the repository. Instead, it simply registers the repository with your local Helm client by adding its metadata (such as the repository URL) to the repositories.yaml file located in ~/.config/helm (on Linux/macOS) or %USERPROFILE%\AppData\Roaming\helm (on Windows).<br/>
+Below is repositeries.yaml<br/>
+```
+apiVersion: v1
+repositories:
+  - name: stable
+    url: https://charts.helm.sh/stable        #Stable charts repositery
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami   #Bitnami charts repositery
+  - name: myrepo(your custom made repo)
+    url: https://example.com/helm-charts
+```
+
+To install packages using helm(first do helm search then below)-
+```
+# Install a chart from the Bitnami repository
+helm install my-mysql bitnami/mysql   
+
+# Install a chart from the official Helm repository
+helm install my-nginx stable/nginx
+
+# Install a chart from your custom internal repository
+helm install my-custom-app myrepo/custom-app
+```
+If you are not specifying the repo name for package to be installed as above then helm will lookup the package in order the repositeries are added and whereever it finds the package first helm will install it. Example- helm install my-mysql mysql 
+
+
 ##### Either you create your own helm in local using helm create and then use helm install to install the packages (or) you do helm repo add to first add(register) the repository and then do helm repo install to install it.<br/>
 
 
 - **Update Repositories**: This will update the repo
   ```sh
-  helm repo update 
+  helm repo update <repo_name>
   ```
 - **List Releases**: This command reads from repositories.yaml and displays the list of repositories you have added.
   ```sh
