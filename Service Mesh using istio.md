@@ -67,7 +67,8 @@ In a service mesh like Istio, each application pod in a Kubernetes cluster is pa
 
 Intercepting Requests**: When a service, such as a catalog, wants to make an API call to another service like payments, the request is intercepted by the sidecar container. This sidecar is part of the service mesh and is deployed alongside the main application container in each pod.<br/>
 
-1. **Mutual TLS**: For security, mutual TLS (mTLS) is used. The sidecar container in the calling service (catalog) adds a certificate to the request. The sidecar container in the receiving service (payments) verifies the certificate and responds accordingly. This ensures secure communication between services without requiring changes to the application code.
+1. **Mutual TLS**: For security, mutual TLS (mTLS) is used. The sidecar container in the calling service (catalog) adds a certificate to the request. The sidecar container in the receiving service (payments) verifies the certificate and responds accordingly. This ensures secure communication between services without requiring changes to the application code.<br/>
+Istio's Istiod issues TLS certificates with key(temporary..e.g 90days) to Sidecar container for secure communication when pod is created and stored in Envoy sidecar memory. Istiod(acts as certification authority) automatically issues, renews certificates to pod service accounts, ensuring encrypted and verified service-to-service communication in the mesh.
 
 2. **Traffic Management**: The sidecar containers handle both inbound and outbound traffic, which allows the service mesh to manage various aspects of service-to-service communication, such as load balancing, Canary deployments, and circuit breaking.
 
