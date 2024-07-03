@@ -49,12 +49,13 @@ kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 If you do... kubectl get pods .. you will see 2/2 means 2 containers running in each pod(one app container and one sidecar container).<br/>
 kubectl edit pod <pod-name> ... you will see containers... side car container comes with all the configuration to manage the pod traffic.<br/>
 
-4. **Open the application to outside traffic**- application is deployed but not accessible from the outside. To make it accessible, you need to create an Istio Ingress Gateway, which maps a path to a route at the edge of your mesh.
+4. **Open the application to outside traffic**- application is deployed but not accessible from the outside. To make it accessible, you need to create an Istio Ingress Gateway, which maps a path to a route at the edge of your mesh. 
 ```sh
 kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
-
 ```
+![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/f4d1fd5f-6eaa-4dd4-a193-dd6e3a8ce875)
 
+if you are using Istio's ingress gateway, you typically do not need an external Application Load Balancer (ALB) to handle incoming traffic. or you can use a simpler external load balancer to distribute traffic to the Istio ingress gateway.(for more understanding on this  read...Istio Ingress Gateway.md)
 
 ### Istio Architecture Components
 
