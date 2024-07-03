@@ -29,7 +29,10 @@ command to run the app
 
 ![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/971f2c37-f26f-49fd-b85a-aa47c70a4d3f)
 
-![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/e168caff-e2b8-4c23-8009-d16758e6d37d)
+![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/e168caff-e2b8-4c23-8009-
+d16758e6d37d)
+
+![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/3f0a0c0d-89c9-48d1-a6a2-ea396b828c9d)
 
 In summary, an Ingress in Kubernetes is a way to manage external access to your services using rules defined in Ingress resources. An Ingress controller handles the actual routing based on these rules, and IngressClass helps you specify which controller to use for different Ingress resources.
 
