@@ -138,7 +138,8 @@ mychart - This specifies the Helm chart to be installed. <br/>
 repo_name: A name(for local) you assign to the repository for reference.<br/>
 repo_url: The URL of the Helm repository you are adding.<br/>
 helm repo add command does not download the entire content of the charts in the repository. Instead, it simply registers the repository with your local Helm client by adding its metadata (such as the repository URL) to the repositories.yaml file located in ~/.config/helm (on Linux/macOS) or %USERPROFILE%\AppData\Roaming\helm (on Windows).<br/>
-Below is repositeries.yaml<br/>
+
+Below is Example of repositeries.yaml<br/>
 ```
 apiVersion: v1
 repositories:
@@ -187,7 +188,19 @@ If you are not specifying the repo name for package to be installed as above the
   helm repo remove <repo_name>
   ```
 
-   
+- **Helm Rollback**: to roll back a release to a previous version
+  ```sh
+  helm rollback <RELEASE_NAME> <REVISION>
+  ```
+  Example - helm rollback my-release 2....will roll back the release named 'my-release' to revision '2'.
+  <RELEASE_NAME>: The name of the release you want to roll back.
+  <REVISION>: The revision number you want to roll back to.
+  You can find the revision numbers for a release by using the helm history command:
+  ```sh
+  helm history <RELEASE_NAME>
+  ```
+
+
 ### Advanced Features
 
 **Helm Hooks and Testing**
