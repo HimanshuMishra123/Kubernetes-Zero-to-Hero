@@ -34,11 +34,27 @@ A service mesh helps manage the traffic of your Kubernetes cluster, particularly
    ```sh
    istioctl install --set profile=demo -y
    ```
+there are multiple profiles Istio provides like production, development, demo so demo means it will come up with the default configuration values that are useful for your demo if you're going with production then you will get more strict values. We use profile as per our requirement.
 
-3. **Label Namespace for Istio Injection:**
+3. **Label Namespace for Istio Injection:** - allowing istio to access the default name space and inject sidecar automatically when you deploy your application later
    ```sh
-   kubectl label namespace <namespace> istio-injection=enabled
+   kubectl label namespace default istio-injection=enabled
    ```
+
+** now you can deploy your application using Kubectl deploy and sidecar will be injected automatically.
+```sh
+kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
+```
+
+If you do... kubectl get pods .. you will see 2/2 means 2 containers running in each pod(one app container and one sidecar container).<br/>
+kubectl edit pod <pod-name> ... you will see containers... side car container comes with all the configuration to manage the pod traffic.<br/>
+
+4. **Open the application to outside traffic**- application is deployed but not accessible from the outside. To make it accessible, you need to create an Istio Ingress Gateway, which maps a path to a route at the edge of your mesh.
+```sh
+kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+
+```
+
 
 ### Istio Architecture Components
 
