@@ -4,6 +4,8 @@ If you are using Istio's ingress gateway, you typically do not need an external 
 
 2. **Load Balancer Integration**: Instead of an ALB, you can use a simpler external load balancer, such as a Network Load Balancer (NLB) or even a simple Layer 4 load balancer, to distribute traffic to the Istio ingress gateway. This load balancer does not need to handle application-level routing because Istio will take care of that.
 
+![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/99f0fb28-0937-46b1-9129-dfe11a93700f)
+
 ### Benefits of Using Istio Ingress Gateway:
 
 1. **Unified Traffic Management**: With Istio managing both external and internal traffic, you get a unified system for applying traffic management policies, security rules, and observability.
