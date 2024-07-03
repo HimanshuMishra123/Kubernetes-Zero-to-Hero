@@ -6,6 +6,8 @@ If you are using Istio's ingress gateway, you typically do not need an external 
 
 ![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/99f0fb28-0937-46b1-9129-dfe11a93700f)
 
+![Istio Service Mesh on AWS EKS _ Step by Step Guide to install Istio Service Mesh on Kubernetes 0-1 screenshot](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/902a8e43-c162-45e9-9d6f-786fa8de935d)
+
 ### Benefits of Using Istio Ingress Gateway:
 
 1. **Unified Traffic Management**: With Istio managing both external and internal traffic, you get a unified system for applying traffic management policies, security rules, and observability.
@@ -68,10 +70,10 @@ spec:
           number: 80
 ```
 
-In this setup:
+In this setup:<br/>
 
-- The external load balancer (e.g., NLB) directs traffic to the Istio ingress gateway.
-- The Istio ingress gateway handles incoming requests and routes them according to the defined Gateway and VirtualService configurations.
-- Istio manages all traffic routing, security, and observability from the point of entry.
+- The external load balancer (e.g., NLB) directs traffic to the Istio ingress gateway. <br/>
+- The Istio ingress gateway handles incoming requests and routes them according to the defined Gateway and VirtualService configurations.<br/>
+- Istio manages all traffic routing, security, and observability from the point of entry.<br/>
 
 By using Istio's ingress gateway, you leverage Istio's powerful features for managing external traffic, eliminating the need for an external ALB.
