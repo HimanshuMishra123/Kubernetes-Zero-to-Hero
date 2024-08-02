@@ -21,6 +21,7 @@ Node Selector is a simple way to constrain pods to nodes with specific labels. I
        image: nginx
      nodeSelector:
        <label-key>: <label-value>
+    # nodeSelector field ensures that the pod will only be scheduled on nodes that have the label <label-key>: <label-value> which you hardcode here or pass that in command line
    ```
 
 **Example:**
@@ -41,11 +42,14 @@ This configuration ensures that the pod will only run on a node labeled with `no
 
 ### Node Affinity
 **Concept:**
-Node Affinity provides more flexible and expressive ways to specify where pods can be scheduled. It supports both required and preferred scheduling rules.
+Node Affinity provides more flexible and expressive ways to specify where pods can be scheduled(on which nodes your pod is eligible to be scheduled on). It supports both required and preferred scheduling rules.
 
 **Types of Node Affinity:**
 1. **Required During Scheduling, Ignored During Execution:**
-   Ensures that the pod will only be scheduled on nodes that match the criteria.
+   - Ensures that the pod will only be scheduled on nodes that match the criteria.
+   - This is a hard requirement. If the conditions are not met, the pod won't be scheduled.
+   - Example: Only schedule pods on nodes with the label disktype=ssd.
+
    ```yaml
    apiVersion: v1
    kind: Pod
@@ -65,8 +69,11 @@ Node Affinity provides more flexible and expressive ways to specify where pods c
                values:
                - <label-value>
    ```
+
 2. **Preferred During Scheduling, Ignored During Execution:**
-   Prefers to schedule the pod on nodes that match the criteria but can schedule it on other nodes if no preferred nodes are available.
+   - This is a soft requirement. Kubernetes will try to schedule the pod on nodes that match the affinity rules, but if none are available, it will still schedule the pod elsewhere on other nodes which are available.
+   - Example: Prefer nodes with region=us-west-1, but allow scheduling on other nodes if necessary.
+
    ```yaml
    apiVersion: v1
    kind: Pod
@@ -115,10 +122,11 @@ If no such node is available, the pod may be scheduled on any other node .
 ### Taints and Tolerations
 **Concept:**
 Taints and Tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. Taints are applied to nodes, and tolerations are applied to pods.
+Tolerations are applied to pods, and they allow (tolerate) the pod to be scheduled onto nodes with matching taints.
 
 **Taints:**
 1. **NoSchedule:**
-   Ensures that no new pods will be scheduled on the node.
+   This command adds a taint to the node `<node-name>` with the key `key`, the value `value`, and the effect `NoSchedule`. This means no pod will be scheduled on this node unless the pod has a toleration for this taint.
    ```bash
    kubectl taint nodes <node-name> <key>=<value>:NoSchedule
    ```
@@ -169,6 +177,29 @@ spec:
     effect: "NoSchedule"
 ```
 This configuration permits the pod to tolerate the `NoSchedule` taint and thus be scheduled on the node despite the taint    .
+
+
+## Example of Multiple Tolerations
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-tolerant-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  tolerations:
+  - key: "key1"
+    operator: "Equal"
+    value: "value1"
+    effect: "NoSchedule"
+  - key: "key2"
+    operator: "Equal"
+    value: "value2"
+    effect: "NoExecute"
+```
+In this example, the pod `multi-tolerant-pod` has two tolerations. It can be scheduled onto nodes with the `key1=value1:NoSchedule` taint and can also run on nodes with the `key2=value2:NoExecute taint`.
 
 ### Summary
 - **Node Selector:** Directly assigns pods to nodes with specific labels.
