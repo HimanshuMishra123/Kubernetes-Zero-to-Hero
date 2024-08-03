@@ -1,7 +1,7 @@
 ### StatefulSet vs. DaemonSet vs. Deployments vs. ReplicaSet
 
 ![Difference-between-ReplicaSet-ReplicationController-2](https://github.com/user-attachments/assets/977d2848-22bf-414f-833f-f15422cf0eb7)
-![6eac4-1fhhtm36vopagnytud1wdjq](https://github.com/user-attachments/assets/d126fc1f-afb7-4568-918a-a6dc0e462406)
+
 ![statefulSets-in-kubernetes-ezgif com-webp-to-jpg-converter](https://github.com/user-attachments/assets/15d7a0d6-4a91-480f-8986-4316990d89b9)
 
 
@@ -55,5 +55,16 @@ Read  example of reddis as statefulset with PV from...
 https://github.com/HimanshuMishra123/three-tier-architecture-demo/blob/master/self-readme.md
 
 ### DaemonSet vs. Deployments vs. ReplicaSet
+![Difference-between-ReplicaSet-ReplicationController-2](https://github.com/user-attachments/assets/977d2848-22bf-414f-833f-f15422cf0eb7)
 ![6eac4-1fhhtm36vopagnytud1wdjq](https://github.com/user-attachments/assets/e6946205-af4d-4edb-be78-5b2e839003d6)
+Common Kubernetes Controller APIs Not Fit For Stateful Apps
 
+ReplicaSet — used to run N identical pods but with ephemeral storage only. No support for persistent storage so clearly not a fit for stateful apps.
+
+Deployment — extends the ReplicaSet functionality to add update semantics that allows pod recreation and rolling upgrades. De-facto standard for stateless apps.
+
+DaemonSet — ensure a maximum of 1 pod per node, thus enabling node-level functions such as monitoring using a machine agent.
+
+Job — used for running batch jobs at a pre-determined schedule.
+
+As we can see, none of the above controllers are suitable for running stateful apps. Hence, the need for StatefulSets, a special controller purpose-built for the needs of stateful apps.
