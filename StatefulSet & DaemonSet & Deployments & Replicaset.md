@@ -63,7 +63,7 @@ ReplicaSet — used to run N identical pods but with ephemeral storage only.
 
 Deployment — extends the ReplicaSet functionality to add update semantics that allows pod recreation and rolling upgrades. De-facto standard for stateless apps.
 
-DaemonSet — ensure a maximum of 1 pod per node, thus enabling node-level functions such as monitoring using a machine agent.
+DaemonSet —  Deamonset feature lets you run a Kubernetes pod on all cluster nodes that meet certain criteria. Every time a new node is added to a cluster, the pod is added to it, and when a node is removed from the cluster, the pod is removed. example - monitoring tool pod, When a node is added or removed from the cluster, the DaemonSet ensures that the associated monitoring tools are also added or cleanly removed, keeping your cluster neat and efficient.
 
 Job — used for running batch jobs at a pre-determined schedule.
 
