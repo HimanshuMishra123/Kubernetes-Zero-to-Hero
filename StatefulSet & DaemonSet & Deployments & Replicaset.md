@@ -4,10 +4,13 @@
 
 ![statefulSets-in-kubernetes-ezgif com-webp-to-jpg-converter](https://github.com/user-attachments/assets/15d7a0d6-4a91-480f-8986-4316990d89b9)
 
+![kubernetes-statefulset](https://github.com/user-attachments/assets/fa82cc2d-e7e3-44d6-a794-b4609fe79ddd)
+
+
 
 How stateful apps are different than stateless apps? As we will see, the `state` aspect of stateful apps makes orchestration more complex than what the initial Kubernetes controllers were built for.
 
-**Stateful Applications** are applications that are mindful of their past and present state. In a nutshell, the applications that keep track of their state. They store data using persistent storage and read the data later to survive service breakdown or restarts. Database applications like MySQL and MongoDB are examples of stateful applications. StatefulSet is the controller that manages the deployment and scaling of a set of Stateful application pods. A stateful pod in Kubernetes is a pod that requires persistent storage and a stable network identity to maintain its state all the time, even during pod restarts or rescheduling. Unlike a Deployment, which manages stateless applications, a StatefulSet maintains a unique identity for each of its pods and ensures that they are deployed in a predictable order.
+**Stateful Applications** are applications that are mindful of their past and present state. In a nutshell, the applications that keep track of their state. They store data using persistent storage and read the data later to survive service breakdown or restarts. Database applications like MySQL , MongoDB, and distributed systems like Apache Kafka are examples of stateful applications. StatefulSet is the controller that manages the deployment and scaling of a set of Stateful application pods. A stateful pod in Kubernetes is a pod that requires persistent storage and a stable network identity to maintain its state all the time, even during pod restarts or rescheduling. Unlike a Deployment, which manages stateless applications, a StatefulSet maintains a unique identity for each of its pods and ensures that they are deployed in a predictable order.
 
 On the other hand, **Stateless Applications** are applications that do not monitor any of their states. They neither store nor read data from any storage; they are basically a one-time request and feedback process. When a stateless application’s current session is down, interrupted or deleted, the new session will start with a clean slate, without referring to past events or processes. Examples include the Nginx web application and Tomcat web server.
 
@@ -27,10 +30,15 @@ Stateless applications by definition have no need for long-running persistence a
 #### Key Features of Statefulset:
 ![20190808_162532179_90804 (1)](https://github.com/user-attachments/assets/36579d94-b60f-4af9-9d13-25e232db263f)
 
-- **Stable, unique network identifiers:** Each pod in a StatefulSet has a unique, stable network identity that persists across rescheduling.
-- **Stable storage:** StatefulSets can provide stable storage using PersistentVolumes, ensuring that each pod has a persistent disk even if it is rescheduled.
-- **Ordered, graceful deployment and scaling:** Pods are created in sequential order, and scaling operations are performed in a controlled manner.
-- **Ordered, automated rolling updates:** Updates to the pods in a StatefulSet are done in a specific, ordered manner to ensure minimal disruption.
+- **Stable and unique network identity:** Each pod in a StatefulSet has a unique, stable network identity that persists across rescheduling.
+- **Stable storage(PV):** StatefulSets can provide stable storage using PersistentVolumes, ensuring that each pod has a persistent disk even if it is rescheduled.
+- **Ordered deployment and scaling:** Pods are created in sequential order, and scaling operations are performed in a controlled manner. StatefulSets support both manual and automatic scaling of pods. It provide guarantees about the order in which pods are created, updated, and deleted. When you scale up a StatefulSet, each pod is created in a specific order, and when you scale down, pods are terminated in the reverse order. This ordering ensures that data consistency and dependencies between pods are maintained.
+
+StatefulSets can utilize PersistentVolumes (PVs) to provide persistent storage for their pods. Each pod created by a StatefulSet can be associated with a unique PersistentVolumeClaim (PVC), allowing the pod to access the same storage even if it gets rescheduled to a different node.
+
+-  **Ordered, automated rolling updates:** Rolling updates can be performed on a StatefulSet, ensuring zero-downtime updates.
+-  **Headless Service:** StatefulSets automatically create a headless service for accessing individual pods. The headless service allows direct communication with each pod by its hostname. It can be used for peer discovery or connecting to specific instances in the StatefulSet.
+-  **StatefulSet Controller:** The StatefulSet controller monitors the desired state and actual state of pods. It ensures that the number of pods matches the desired replica count. The controller handles pod creation, deletion, scaling, and rolling updates.
 
 #### Common Use Cases statefulset:
 - Databases (e.g., MySQL, PostgreSQL)
