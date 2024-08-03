@@ -25,6 +25,8 @@ As highlighted in Containerizing Stateful Applications, data volume mapped to a 
 Stateless applications by definition have no need for long-running persistence and hence usually rely on the first 2 options. However, stateful applications (such as databases, message queues, metadata stores) have to use the 3rd approach in order to guarantee that the data outlives the lifecycle of a container or a host. The above also means that as new containers or new hosts are brought up, we should be able to map them to existing persistent volumes.
 
 #### Key Features:
+![20190808_162532179_90804 (1)](https://github.com/user-attachments/assets/36579d94-b60f-4af9-9d13-25e232db263f)
+
 - **Stable, unique network identifiers:** Each pod in a StatefulSet has a unique, stable network identity that persists across rescheduling.
 - **Stable storage:** StatefulSets can provide stable storage using PersistentVolumes, ensuring that each pod has a persistent disk even if it is rescheduled.
 - **Ordered, graceful deployment and scaling:** Pods are created in sequential order, and scaling operations are performed in a controlled manner.
@@ -49,68 +51,7 @@ A PersistentVolume (PV) is a piece of storage in a Kubernetes cluster that has b
 - Maintaining logs
 - Providing shared storage for stateful applications
 
-### Example of Using StatefulSet and PersistentVolume
+Read  example of reddis as statefulset with PV from... 
+https://github.com/HimanshuMishra123/three-tier-architecture-demo/blob/master/self-readme.md
 
-#### StatefulSet YAML Example:
-```yaml
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: my-statefulset
-spec:
-  serviceName: "my-service"
-  replicas: 3
-  selector:
-    matchLabels:
-      app: my-app
-  template:
-    metadata:
-      labels:
-        app: my-app
-    spec:
-      containers:
-      - name: my-container
-        image: my-image
-        volumeMounts:
-        - name: my-storage
-          mountPath: /data
-  volumeClaimTemplates:
-  - metadata:
-      name: my-storage
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "my-storage-class"
-      resources:
-        requests:
-          storage: 1Gi
-```
 
-#### PersistentVolume and PersistentVolumeClaim YAML Example:
-```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: my-pv
-spec:
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  hostPath:
-    path: /mnt/data
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: my-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-```
-
-In the example above, the StatefulSet specifies a `volumeClaimTemplates` section to request PersistentVolumeClaims for each pod. This ensures each pod has its own PersistentVolume, providing stable and persistent storage.
