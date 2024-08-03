@@ -61,15 +61,82 @@ https://github.com/HimanshuMishra123/three-tier-architecture-demo/blob/master/se
 
 ### DaemonSet vs. Deployments vs. ReplicaSet
 ![Difference-between-ReplicaSet-ReplicationController-2](https://github.com/user-attachments/assets/977d2848-22bf-414f-833f-f15422cf0eb7)
+
 ![6eac4-1fhhtm36vopagnytud1wdjq](https://github.com/user-attachments/assets/e6946205-af4d-4edb-be78-5b2e839003d6)
-Common Kubernetes Controller APIs Not Fit For Stateful Apps
+Common Kubernetes Controller APIs Not Fit For Stateful Apps. none of the above controllers are suitable for running stateful apps. Hence, the need for StatefulSets, a special controller purpose-built for the needs of stateful apps.
 
-ReplicaSet — used to run N identical pods but with ephemeral storage only. No support for persistent storage so clearly not a fit for stateful apps.
+**Deployment** — Manages stateless applications and extends the ReplicaSet functionality to add update semantics that allows pod recreation and rolling upgrades and scaling.
 
-Deployment — extends the ReplicaSet functionality to add update semantics that allows pod recreation and rolling upgrades. De-facto standard for stateless apps.
+**ReplicaSet** — Ensures a specified number of pod replicas are running but with ephemeral storage only. No support for persistent storage so clearly not a fit for stateful apps. Used by Deployments to manage pods but can be used independently for simpler scenarios.
 
-DaemonSet —  Deamonset feature lets you run a Kubernetes pod on all cluster nodes that meet certain criteria. Every time a new node is added to a cluster, the pod is added to it, and when a node is removed from the cluster, the pod is removed. example - monitoring tool pod, When a node is added or removed from the cluster, the DaemonSet ensures that the associated monitoring tools are also added or cleanly removed, keeping your cluster neat and efficient.
+**Job** — used for running batch jobs at a pre-determined schedule.
 
-Job — used for running batch jobs at a pre-determined schedule.
+**DaemonSet** —  Deamonset feature lets you run a Kubernetes pod on all(or selected) cluster nodes that meet certain criteria. Every time a new node is added to a cluster, the pod is added to it, and when a node is removed from the cluster, the pod is removed. example - monitoring tool pod, When a node is added or removed from the cluster, the DaemonSet ensures that the associated monitoring tools are also added or cleanly removed, keeping your cluster neat and efficient.
 
-As we can see, none of the above controllers are suitable for running stateful apps. Hence, the need for StatefulSets, a special controller purpose-built for the needs of stateful apps.
+DaemonSets in Kubernetes are typically used for running system-level or cluster-wide services and are generally considered stateless. However, whether a DaemonSet is stateful or stateless depends on the specific use case and implementation of the pods it manages.
+
+### DaemonSet Characteristics:
+1. **Stateless Nature**:
+   - DaemonSets usually run pods that provide services such as monitoring, logging, and networking, which do not require persistent state. Examples include Fluentd, Logstash, Prometheus Node Exporter, and CNI plugins.
+   - These services collect data, process it, and often send it elsewhere (e.g., to a central logging server), hence not requiring persistent storage(so stateless).
+
+2. **Potential Stateful Use Cases**:
+   - While DaemonSets are commonly stateless, they can also be used for stateful workloads if each pod needs to maintain some local state on each node. An example might be a local caching service where each node keeps its own cache.
+   - If a DaemonSet is used in a stateful manner, it may utilize PersistentVolumes to store state persistently on each node.
+
+### Example Use Cases:
+
+#### Stateless DaemonSet:
+- **Fluentd DaemonSet**:
+  ```yaml
+  apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    name: fluentd
+  spec:
+    selector:
+      matchLabels:
+        app: fluentd
+    template:
+      metadata:
+        labels:
+          app: fluentd
+      spec:
+        containers:
+        - name: fluentd
+          image: fluentd:latest
+  ```
+
+#### Stateful DaemonSet:
+- **Local Caching Service**:
+  ```yaml
+  apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    name: local-cache
+  spec:
+    selector:
+      matchLabels:
+        app: local-cache
+    template:
+      metadata:
+        labels:
+          app: local-cache
+      spec:
+        containers:
+        - name: local-cache
+          image: cache-image:latest
+          volumeMounts:
+          - name: cache-storage
+            mountPath: /cache
+      volumes:
+      - name: cache-storage
+        hostPath:
+          path: /mnt/cache
+          type: DirectoryOrCreate
+  ```
+
+### Summary
+- **DaemonSets** are typically considered and used for stateless operations, running services that do not require persistent state across nodes.
+- They can be configured for stateful operations if needed, using PersistentVolumes or local storage on each node.
+- The primary role of DaemonSets is to ensure that a copy of a specific pod runs on all (or selected) nodes, providing node-level services essential for the cluster's operation.
