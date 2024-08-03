@@ -1,8 +1,10 @@
 ### StatefulSet vs. DaemonSet vs. Deployments vs. ReplicaSet
 
-<image>
+![Difference-between-ReplicaSet-ReplicationController-2](https://github.com/user-attachments/assets/977d2848-22bf-414f-833f-f15422cf0eb7)
+![6eac4-1fhhtm36vopagnytud1wdjq](https://github.com/user-attachments/assets/d126fc1f-afb7-4568-918a-a6dc0e462406)
 
-<image>
+
+
 
 How stateful apps are different than stateless apps? As we will see, the `state` aspect of stateful apps makes orchestration more complex than what the initial Kubernetes controllers were built for.
 
