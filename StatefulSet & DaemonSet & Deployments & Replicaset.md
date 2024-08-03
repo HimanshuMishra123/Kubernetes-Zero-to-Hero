@@ -31,11 +31,8 @@ Stateless applications by definition have no need for long-running persistence a
 ![20190808_162532179_90804 (1)](https://github.com/user-attachments/assets/36579d94-b60f-4af9-9d13-25e232db263f)
 #### Key Features of Statefulset:
 - **Stable and unique network identity:** Each pod in a StatefulSet has a unique, stable network identity that persists across rescheduling.
-- **Stable storage(PV):** StatefulSets can provide stable storage using PersistentVolumes, ensuring that each pod has a persistent disk even if it is rescheduled.
+- **Stable storage(PV):** StatefulSets can provide stable storage using PersistentVolumes (PVs) to the pods, ensuring that each pod has a persistent volume even if it is rescheduled. Each pod created by a StatefulSet is associated with a unique PersistentVolumeClaim (PVC), allowing the pod to access the same storage if it gets rescheduled or restarted even  to a different node as well.
 - **Ordered deployment and scaling:** Pods are created in sequential order, and scaling operations are performed in a controlled manner. StatefulSets support both manual and automatic scaling of pods. It provide guarantees about the order in which pods are created, updated, and deleted. When you scale up a StatefulSet, each pod is created in a specific order, and when you scale down, pods are terminated in the reverse order. This ordering ensures that data consistency and dependencies between pods are maintained.
-
-StatefulSets can utilize PersistentVolumes (PVs) to provide persistent storage for their pods. Each pod created by a StatefulSet can be associated with a unique PersistentVolumeClaim (PVC), allowing the pod to access the same storage even if it gets rescheduled to a different node.
-
 - **Ordered, automated rolling updates:** Rolling updates can be performed on a StatefulSet, ensuring zero-downtime updates.
 - **Headless Service:** StatefulSets automatically create a headless service for accessing individual pods. The headless service allows direct communication with each pod by its hostname. It can be used for peer discovery or connecting to specific instances in the StatefulSet.
 - **StatefulSet Controller:** The StatefulSet controller monitors the desired state and actual state of pods. It ensures that the number of pods matches the desired replica count. The controller handles pod creation, deletion, scaling, and rolling updates.
@@ -52,7 +49,7 @@ A PersistentVolume (PV) is a piece of storage in a Kubernetes cluster that has b
 - **Provisioning:** PVs can be statically created by an administrator or dynamically provisioned using StorageClasses.
 - **Reclaim Policy:** When a user is done with a PV, it can either be retained, recycled, or deleted based on the reclaim policy.
 - **Access Modes:** PVs support different access modes, including ReadWriteOnce, ReadOnlyMany, and ReadWriteMany, dictating how the volume can be mounted by pods.
-- **PersistentVolumeClaims (PVCs):** Users request PVs by creating PersistentVolumeClaims (PVCs). The cluster then binds the PVC to a suitable PV, ensuring the user gets the requested storage.
+- **PersistentVolumeClaims (PVCs):** Users request PVs by creating PersistentVolumeClaims (PVCs). The cluster then creates and binds the PVC to a suitable PV, ensuring the user gets the requested storage. on a high level, When a PVC is created with a reference to the Storage Class, the CSI contoller Plugin detects the PVC automatically and use storage class (SC) info to provisions an persistent volume and attaches it to the StatefulSet pod.
 
 #### Common Use Cases PV:
 - Storing application data
