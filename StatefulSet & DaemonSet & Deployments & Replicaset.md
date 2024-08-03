@@ -137,8 +137,8 @@ spec:
 ### Summary
 - **Job**: Use for one-time or fixed-count tasks. It's not scheduled but runs immediately when created.
 - **CronJob**: Use for recurring tasks that need to run on a schedule. It automatically creates Jobs at specified intervals.
-
 Both Jobs and CronJobs are essential for batch processing in Kubernetes, allowing you to handle both immediate and scheduled tasks efficiently.
+
 ---
 **DaemonSet** —  Deamonset feature lets you run a Kubernetes pod on all(or selected) cluster nodes that meet certain criteria. Every time a new node is added to a cluster, the pod is added to it, and when a node is removed from the cluster, the pod is removed. example - monitoring tool pod, When a node is added or removed from the cluster, the DaemonSet ensures that the associated monitoring tools are also added or cleanly removed, keeping your cluster neat and efficient.
 
