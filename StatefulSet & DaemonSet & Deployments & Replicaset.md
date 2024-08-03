@@ -27,18 +27,18 @@ As highlighted in Containerizing Stateful Applications, data volume mapped to a 
 
 Stateless applications by definition have no need for long-running persistence and hence usually rely on the first 2 options. However, stateful applications (such as databases, message queues, metadata stores) have to use the 3rd approach in order to guarantee that the data outlives the lifecycle of a container or a host. The above also means that as new containers or new hosts are brought up, we should be able to map them to existing persistent volumes.
 
-#### Key Features of Statefulset:
-![20190808_162532179_90804 (1)](https://github.com/user-attachments/assets/36579d94-b60f-4af9-9d13-25e232db263f)
 
+![20190808_162532179_90804 (1)](https://github.com/user-attachments/assets/36579d94-b60f-4af9-9d13-25e232db263f)
+#### Key Features of Statefulset:
 - **Stable and unique network identity:** Each pod in a StatefulSet has a unique, stable network identity that persists across rescheduling.
 - **Stable storage(PV):** StatefulSets can provide stable storage using PersistentVolumes, ensuring that each pod has a persistent disk even if it is rescheduled.
 - **Ordered deployment and scaling:** Pods are created in sequential order, and scaling operations are performed in a controlled manner. StatefulSets support both manual and automatic scaling of pods. It provide guarantees about the order in which pods are created, updated, and deleted. When you scale up a StatefulSet, each pod is created in a specific order, and when you scale down, pods are terminated in the reverse order. This ordering ensures that data consistency and dependencies between pods are maintained.
 
 StatefulSets can utilize PersistentVolumes (PVs) to provide persistent storage for their pods. Each pod created by a StatefulSet can be associated with a unique PersistentVolumeClaim (PVC), allowing the pod to access the same storage even if it gets rescheduled to a different node.
 
--  **Ordered, automated rolling updates:** Rolling updates can be performed on a StatefulSet, ensuring zero-downtime updates.
--  **Headless Service:** StatefulSets automatically create a headless service for accessing individual pods. The headless service allows direct communication with each pod by its hostname. It can be used for peer discovery or connecting to specific instances in the StatefulSet.
--  **StatefulSet Controller:** The StatefulSet controller monitors the desired state and actual state of pods. It ensures that the number of pods matches the desired replica count. The controller handles pod creation, deletion, scaling, and rolling updates.
+- **Ordered, automated rolling updates:** Rolling updates can be performed on a StatefulSet, ensuring zero-downtime updates.
+- **Headless Service:** StatefulSets automatically create a headless service for accessing individual pods. The headless service allows direct communication with each pod by its hostname. It can be used for peer discovery or connecting to specific instances in the StatefulSet.
+- **StatefulSet Controller:** The StatefulSet controller monitors the desired state and actual state of pods. It ensures that the number of pods matches the desired replica count. The controller handles pod creation, deletion, scaling, and rolling updates.
 
 #### Common Use Cases statefulset:
 - Databases (e.g., MySQL, PostgreSQL)
