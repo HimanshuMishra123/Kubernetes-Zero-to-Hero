@@ -7,6 +7,110 @@
 
 How stateful apps are different than stateless apps? As we will see, the `state` aspect of stateful apps makes orchestration more complex than what the initial Kubernetes controllers were built for.
 
-Stateful Applications are applications that are mindful of their past and present state. In a nutshell, the applications that monitor or keep track of their state. They store data using persistent storage and read the data later to survive service breakdown or restarts. Database applications like MySQL and MongoDB are examples of stateful applications.
+Stateful Applications are applications that are mindful of their past and present state. In a nutshell, the applications that monitor or keep track of their state. They store data using persistent storage and read the data later to survive service breakdown or restarts. Database applications like MySQL and MongoDB are examples of stateful applications. A StatefulSet is a Kubernetes API object used to manage stateful applications. Unlike a Deployment, which manages stateless applications, a StatefulSet maintains a unique identity for each of its pods and ensures that they are deployed in a predictable order.
 
 On the other hand, Stateless Applications are applications that do not monitor any of their states. They neither store nor read data from any storage; they are basically a one-time request and feedback process. When a stateless application’s current session is down, interrupted or deleted, the new session will start with a clean slate, without referring to past events or processes. Examples include the Nginx web application and Tomcat web server.
+
+### Persistent Volumes
+![c0e51-1jcqz09xnlqufsm3sl-ixvw](https://github.com/user-attachments/assets/8b473244-fd2f-46b8-8085-c7bf6d760556)
+
+As highlighted in Containerizing Stateful Applications, data volume mapped to a container can be either:
+
+1. Inside the container
+
+2. Inside the host, independent of the container
+
+3. Outside the host, independent of both the host and the container
+
+Stateless applications by definition have no need for long-running persistence and hence usually rely on the first 2 options. However, stateful applications (such as databases, message queues, metadata stores) have to use the 3rd approach in order to guarantee that the data outlives the lifecycle of a container or a host. The above also means that as new containers or new hosts are brought up, we should be able to map them to existing persistent volumes.
+
+#### Key Features:
+- **Stable, unique network identifiers:** Each pod in a StatefulSet has a unique, stable network identity that persists across rescheduling.
+- **Stable storage:** StatefulSets can provide stable storage using PersistentVolumes, ensuring that each pod has a persistent disk even if it is rescheduled.
+- **Ordered, graceful deployment and scaling:** Pods are created in sequential order, and scaling operations are performed in a controlled manner.
+- **Ordered, automated rolling updates:** Updates to the pods in a StatefulSet are done in a specific, ordered manner to ensure minimal disruption.
+
+#### Common Use Cases:
+- Databases (e.g., MySQL, PostgreSQL)
+- Distributed systems (e.g., Kafka, Zookeeper)
+- Stateful applications requiring stable, persistent storage and network identities
+
+### PersistentVolume (PV)
+A PersistentVolume (PV) is a piece of storage in a Kubernetes cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes. PVs are independent of the pods that use them, making them durable and persistent.
+
+#### Key Features:
+- **Provisioning:** PVs can be statically created by an administrator or dynamically provisioned using StorageClasses.
+- **Reclaim Policy:** When a user is done with a PV, it can either be retained, recycled, or deleted based on the reclaim policy.
+- **Access Modes:** PVs support different access modes, including ReadWriteOnce, ReadOnlyMany, and ReadWriteMany, dictating how the volume can be mounted by pods.
+- **PersistentVolumeClaims (PVCs):** Users request PVs by creating PersistentVolumeClaims (PVCs). The cluster then binds the PVC to a suitable PV, ensuring the user gets the requested storage.
+
+#### Common Use Cases:
+- Storing application data
+- Maintaining logs
+- Providing shared storage for stateful applications
+
+### Example of Using StatefulSet and PersistentVolume
+
+#### StatefulSet YAML Example:
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-statefulset
+spec:
+  serviceName: "my-service"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: my-image
+        volumeMounts:
+        - name: my-storage
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: my-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "my-storage-class"
+      resources:
+        requests:
+          storage: 1Gi
+```
+
+#### PersistentVolume and PersistentVolumeClaim YAML Example:
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /mnt/data
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+In the example above, the StatefulSet specifies a `volumeClaimTemplates` section to request PersistentVolumeClaims for each pod. This ensures each pod has its own PersistentVolume, providing stable and persistent storage.
