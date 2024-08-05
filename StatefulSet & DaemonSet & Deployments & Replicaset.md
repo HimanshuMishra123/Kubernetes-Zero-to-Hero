@@ -59,6 +59,8 @@ A PersistentVolume (PV) is a piece of storage in a Kubernetes cluster that has b
 Read  example of reddis as statefulset with PV from... 
 https://github.com/HimanshuMishra123/three-tier-architecture-demo/blob/master/self-readme.md
 
+![Capture](https://github.com/user-attachments/assets/7bf14a42-dc2c-4231-af95-7832370b749d)
+
 ### DaemonSet vs. Deployments vs. ReplicaSet
 ![Difference-between-ReplicaSet-ReplicationController-2](https://github.com/user-attachments/assets/977d2848-22bf-414f-833f-f15422cf0eb7)
 
