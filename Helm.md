@@ -31,6 +31,7 @@
 
 ### Helm Chart Structure
 Executing helm create mychart will create a directory called mychart with the following structure:
+ ```
   mychart/
   ├── Chart.yaml
   ├── values.yaml
@@ -44,7 +45,7 @@ Executing helm create mychart will create a directory called mychart with the fo
   │   ├── service.yaml
   │   └── serviceaccount.yaml
   └── .helmignore
-
+```
 
 **Example Commands**
 - Create a Helm chart:
