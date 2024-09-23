@@ -173,7 +173,11 @@ If you are not specifying the repo name for package to be installed as above the
   ```sh
   helm repo update <repo_name>
   ```
-- **List Releases**: This command reads from repositories.yaml and displays the list of repositories you have added.
+- **Remove Repositories**: This command will remove the specified repository from repositories.yaml.
+  ```sh
+  helm repo remove <repo_name>
+  ```
+- **List added Repositiries**: This command reads from repositories.yaml and displays the list of repositories you have added.
   ```sh
   helm repo list
   ```
@@ -183,10 +187,9 @@ If you are not specifying the repo name for package to be installed as above the
   myrepo  https://example.com/helm-charts
   stable  https://charts.helm.sh/stable
   ```
-
-- **Remove Repositories**: This command will remove the specified repository from repositories.yaml.
+- **List Releases on K8s cluster**:
   ```sh
-  helm repo remove <repo_name>
+  helm list
   ```
 
 - **Helm Rollback**: to roll back a release to a previous version
