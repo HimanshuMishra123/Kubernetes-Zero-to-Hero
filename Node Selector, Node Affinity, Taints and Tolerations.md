@@ -121,8 +121,7 @@ If no such node is available, the pod may be scheduled on any other node .
 
 ### Taints and Tolerations
 **Concept:**
-Taints and Tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. Taints are applied to nodes, and tolerations are applied to pods.
-Tolerations are applied to pods, and they allow (tolerate) the pod to be scheduled onto nodes with matching taints.
+Taints and Tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. Taints are applied to nodes, and tolerations are applied to pods. and that allow (tolerate) the pod to be scheduled onto nodes with matching taints.
 
 **Taints:**
 1. **NoSchedule:**
