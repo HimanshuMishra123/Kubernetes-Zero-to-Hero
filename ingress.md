@@ -9,6 +9,17 @@
 
 # Above example were unsecure routing which is http protocol, but we need Secure way so TLS based ingress rounting is used
 
+1. **Generate the TLS certificate and key:**
+   You need an SSL certificate and its associated private key, both in `.pem` format.
+
+   You can create a self-signed certificate for testing purposes like this:
+   
+   ```bash
+   openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=example.com/O=example"
+   ```
+   This command will generate:
+   - `tls.crt`: The public certificate
+   - `tls.key`: The private key
 ![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/0f238964-3c7d-4023-b801-1e844ddfe4c9)
 ![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/59cae6fc-9856-434a-b8d1-e573eac12d89)
 ![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/513d47d5-1c41-4606-8112-fb9ff7814a6f)
