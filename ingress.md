@@ -9,6 +9,10 @@
 
 # Above example were unsecure routing which is http protocol, but we need Secure way so TLS based ingress rounting is used
 
+![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/0f238964-3c7d-4023-b801-1e844ddfe4c9)
+![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/59cae6fc-9856-434a-b8d1-e573eac12d89)
+![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/513d47d5-1c41-4606-8112-fb9ff7814a6f)
+
 1. **Generate the TLS certificate and key:**
    You need an SSL certificate and its associated private key, both in `.pem` format.
 
@@ -20,11 +24,6 @@
    This command will generate:
    - `tls.crt`: The public certificate
    - `tls.key`: The private key
-![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/0f238964-3c7d-4023-b801-1e844ddfe4c9)
-![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/59cae6fc-9856-434a-b8d1-e573eac12d89)
-![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/513d47d5-1c41-4606-8112-fb9ff7814a6f)
-
-
 ![image](https://github.com/HimanshuMishra123/Kubernetes-Zero-to-Hero/assets/164254902/7f62c045-547c-4212-83a8-77dc4cd7e4a1)
 
 Ingress Resource <br/>
