@@ -1,4 +1,6 @@
-N
+## Network Policies
+Use network policies to restrict traffic within the cluster and to/from external sources. Use firewalls and security groups to control traffic to and from the cluster.<br/>
+
 Using **Network Policies** in Kubernetes deployments is essential for securing communication between pods and ensuring that your applications operate safely in a multi-tenant environment. Here are several key reasons to implement Network Policies:
 
 ### 1. **Enhancing Security**
@@ -21,7 +23,7 @@ Using **Network Policies** in Kubernetes deployments is essential for securing c
 - **Preventing Unwanted Traffic**: By controlling network access, you reduce the likelihood of accidental or malicious traffic disrupting your applications.
 - **Reducing Latency**: Targeted communication between specific services can reduce latency and improve performance by minimizing unnecessary network hops.
 
-### Example of Network Policy in a Deployment
+### Example of Network Policy in a Deployment (you can generate admission controller using `Kyverno` to validate and mutate the incoming k8s resources regarding network policy)
 
 Here's a simple example of how you might define a Network Policy for a deployment:
 
