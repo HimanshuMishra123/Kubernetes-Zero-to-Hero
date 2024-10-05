@@ -30,7 +30,7 @@ spec:
 This way, instead of load balancing, Kubernetes provides the DNS name of the service, and it will resolve to the **individual IPs** of the pods behind it.
 
 ### Headless services can be useful for a variety of scenarios, including: 
--**Load balancing**: You can use a headless service to distribute traffic evenly across pods that match a selector. 
--**Service discovery**: You can use a headless service to create DNS records that contain the IP addresses of pods that match a selector. 
--**Direct pod access**: You can use a headless service to connect directly to pods that are associated with a service. This can be useful for services that require direct access to the underlying pods, such as DNS servers and load balancers. 
--**Stateful applications**: You can use a headless service to ensure that a client lands on the same pod if they disconnect while rendering a 3D image. 
+- **Load balancing**: You can use a headless service to distribute traffic evenly across pods that match a selector. 
+- **Service discovery**: You can use a headless service to create DNS records that contain the IP addresses of pods that match a selector. 
+- **Direct pod access**: You can use a headless service to connect directly to pods that are associated with a service. This can be useful for services that require direct access to the underlying pods, such as DNS servers and load balancers. 
+- **Stateful applications**: You can use a headless service to ensure that a client lands on the same pod if they disconnect while rendering a 3D image. 
